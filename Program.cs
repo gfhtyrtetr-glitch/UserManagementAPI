@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using UserManagementAPI.Contracts;
 using UserManagementAPI.Data;
+using UserManagementAPI.Middleware;
 using UserManagementAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,10 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<TokenAuthenticationMiddleware>();
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
